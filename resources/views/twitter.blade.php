@@ -15,9 +15,32 @@
   </nav>
 
   <div class="container">
+    <form class="card" action="{{route('post.tweet')}}" method="post" enctype="multipart/form-data">
+      {{csrf_field()}}
+      @if(count($errors) > 0)
+        @foreach($errors->all() as $error)
+          <div class="alert alert-danger">
+            {{$error}}
+          </div>
+        @endforeach
+      @endif
+
+      <div class="form-group" style="margin:10px;">
+        <label>Tweet Text</label>
+        <input type="text" name="tweet" class="form-control">
+      </div>
+      <div class="form-group" style="margin:10px;">
+        <label>Upload Images</label>
+        <input type="file" name="images[]" multiple class="form-control">
+      </div>
+      <div class="form-group">
+        <button class="btn btn-success" name="button">Create Tweet</button>
+      </div>
+    </form>
+
     @if(!empty($data))
       @foreach($data as $key => $tweet)
-        <div class="card">
+        <div class="card mb-2">
           <div class="card-body">
             <h3>{{$tweet['text']}}
               Fav {{$tweet['favorite_count']}}
@@ -31,8 +54,7 @@
           </div>
         </div>
       @endforeach
-    @endif
+   @endif
   </div>
-
 </body>
 </html>
